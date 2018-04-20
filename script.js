@@ -17,17 +17,34 @@ function dispJobs() {
 			info = xhr.responseText;				
 			obj = JSON.parse(info);
 			
-		
 			targets = obj.jobs;
 
-			alert("Targets: " + targets);
-			var out = "";
-	
 			for (count in targets) {
-				out += targets[count].company + "  ";
+				dispJob(targets[count]);
 			}
-			document.getElementById("demo").innerHTML = out;
     	}
     }
 	xhr.send(params);
 }
+
+function dispJob(thisJob) {
+	var company = thisJob.company;
+	var job = thisJob.job;
+	var link = thisJob.link;
+	var status = thisJob.status;
+
+	if (company != undefined) {
+
+		var out = "<li>COMPANY: " + company + "</li>";
+		out += "<li>JOB: " + job + "</li>";
+		out += "<li>LINK: " + link + "</li>";
+		out += "<li>Status: " + status + "</li>";
+
+
+		$("#job").append("<p>" + out + "</p>");
+
+		var jstr = JSON.stringify(thisJob);
+    }
+}
+
+

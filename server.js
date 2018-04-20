@@ -98,7 +98,7 @@ express()
 			collection.find().toArray(function(err, results) {
 				if (!err) {
 					out["jobs"] = results;
-					console.log("ALL: " + results[0].company);
+					console.log("ALL: " + results[0]);
 					response.send(out);
 				} else {
 					response.send('<!DOCTYPE HTML><html><head><title>DB</title></head><body><h1>ERROR displaying Passenger DB</h1></body></html>');
