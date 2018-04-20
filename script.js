@@ -20,14 +20,14 @@ function dispJobs() {
 			targets = obj.jobs;
 
 			for (count in targets) {
-				dispJob(targets[count]);
+				printJob(targets[count]);
 			}
     	}
     }
 	xhr.send(params);
 }
 
-function dispJob(thisJob) {
+function printJob(thisJob) {
 	var company = thisJob.company;
 	var job = thisJob.job;
 	var link = thisJob.link;
@@ -35,13 +35,15 @@ function dispJob(thisJob) {
 
 	if (company != undefined) {
 
-		var out = "<li>COMPANY: " + company + "</li>";
-		out += "<li>JOB: " + job + "</li>";
-		out += "<li>LINK: " + link + "</li>";
-		out += "<li>Status: " + status + "</li>";
+		var out = "";
+		out += "<p>Company: " + company + "</p>";
+		out += "<p>Position: " + job + "</p>";
+		out += "<p>Status: " + status + "</p>";
+		out += "<p>Link: " + "<a href=" + link + ">Go to Site</a>" + "</p>";
 
-
-		$("#job").append("<p>" + out + "</p>");
+		// <a href="http://www.yahoo.com">here</a>
+		
+		$("#job").append("<div class='floating-box'>" + out + "</div>");
 
 		var jstr = JSON.stringify(thisJob);
     }

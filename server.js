@@ -59,10 +59,10 @@ express()
 	newJob.company = request.body.company;
 	newJob.job = request.body.job;
 	newJob.link = request.body.link;
-	newJob.stat = request.body.status;
+	newJob.status = request.body.status;
 
 
-	if (newJob.company != undefined && newJob.job != undefined && newJob.link != undefined && newJob.stat != undefined) {
+	if (newJob.company != undefined && newJob.job != undefined && newJob.link != undefined && newJob.status != undefined) {
 		db.collection(dbcoll, function(error, coll) {
 
 			coll.insert(newJob, function(error, saved) {
