@@ -8,66 +8,120 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
 });
 
+const dbcoll = "jobapps";
+
 
 express()
 
-	.use(function(req, res, next) {
+.use(function(req, res, next) {
 	  res.header("Access-Control-Allow-Origin", "*");
 	  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	  next();
-	})
-	.use(bodyParser.json())
-	.use(bodyParser.urlencoded({ extended: true }))
+})
+.use(bodyParser.json())
+.use(bodyParser.urlencoded({ extended: true }))
 
-	.get('/', function (request, response) {
+.get('/', function (request, response) {
 
-		console.log("IN GET");
-		response.set('Content-Type', 'text/html');
-		var indexPage = '';
+	console.log("IN GET");
+	response.set('Content-Type', 'text/html');
+	var indexPage = '';
 
-		// Line 50: equivalent to `db.fooditems` in MongoDB client shell
-		db.collection('companies', function(er, collection) {
+	// Line 50: equivalent to `db.fooditems` in MongoDB client shell
+	db.collection(dbcoll, function(er, collection) {
 
-			// Line 53: equivalent to `db.fooditems.find()` in MongoDB client shell
-			collection.find().toArray(function(err, results) {
+		// Line 53: equivalent to `db.fooditems.find()` in MongoDB client shell
+		collection.find().toArray(function(err, results) {
 
-				// All results of db.fooditems.find() will go into...
-				// ...`results`.  `results` will be an array (or list)
-				if (!err) {
-					indexPage += "<!DOCTYPE HTML><html><head><title>What Did You Feed Me?</title></head><body><h1>What Did You Feed Me?</h1>";
-					for (var count = 0; count < results.length; count++) {
-						indexPage += "<p>You fed me " + results[count].company + "!</p>";
-					}
-					indexPage += "</body></html>"
-					response.send(indexPage);
-				} else {
-					response.send('<!DOCTYPE HTML><html><head><title>What Did You Feed Me?</title></head><body><h1>Whoops, something went terribly wrong!</h1></body></html>');
+			// All results of db.fooditems.find() will go into...
+			// ...`results`.  `results` will be an array (or list)
+			if (!err) {
+				indexPage += "<!DOCTYPE HTML><html><head><title>What Did You Feed Me?</title></head><body><h1>What Did You Feed Me?</h1>";
+				for (var count = 0; count < results.length; count++) {
+					indexPage += "<p>You fed me " + results[count].company + "!</p>";
 				}
-			});
+				indexPage += "</body></html>"
+				response.send(indexPage);
+			} else {
+				response.send('<!DOCTYPE HTML><html><head><title>What Did You Feed Me?</title></head><body><h1>Whoops, something went terribly wrong!</h1></body></html>');
+			}
 		});
+	});		
+})
 
-		
-	})
-	.post('/jobs', function (request, response) {
 
-		console.log(request.body);
-		var comp = request.body.company;
-		//foodItem = foodItem.replace(/[^\w\s]/gi, ''); // remove all special characters.  Can you explain why this is important?
-		var toInsert = {
-			"company": comp,
-		};
-		db.collection('companies', function(error, coll) {
-			coll.insert(toInsert, function(error, saved) {
+.post('/jobs', function (request, response) {
+
+	console.log("Posting to /jobs");
+	console.log(request.body);
+
+	var newJob = {};
+	newJob.company = request.body.company;
+	newJob.job = request.body.job;
+	newJob.link = request.body.link;
+	newJob.stat = request.body.status;
+
+
+	if (newJob.company != undefined && newJob.job != undefined && newJob.link != undefined && newJob.stat != undefined) {
+		db.collection(dbcoll, function(error, coll) {
+
+			coll.insert(newJob, function(error, saved) {
 				if (error) {
 					console.log("Error: " + error);
 					response.send(500);
 				}
 				else {
-					response.send('<html><head><title>Thanks!</title></head><body><h2>Thanks for your submission!</h2></body></html>');
+					response.send("JOB added to DB ! " + newJob);
 				}
-		    });
+			});
 		});
-	})
+	}
+	else {
+		response.send('{"error":"Whoops, something is wrong with your data!"}');
+	}		
+})
+
+
+
+.post('/seeJobs', function (request, response) {
+
+	console.log("Posting to /seeJobs");
+
+	var comp = request.body.company;
+	var seeAll = (request.body.company == undefined);
+	var out = {};
+
+	if (seeAll) {
+		console.log("Showing ALL results");
+		
+		db.collection(dbcoll, function(er, collection) {
+			collection.find().toArray(function(err, results) {
+				if (!err) {
+					out["jobs"] = results;
+					console.log("ALL: " + results[0].company);
+					response.send(out);
+				} else {
+					response.send('<!DOCTYPE HTML><html><head><title>DB</title></head><body><h1>ERROR displaying Passenger DB</h1></body></html>');
+				}
+			});
+		});
+	}
+	else {
+		db.collection(dbcoll, function(er, collection) {
+			collection.find( { company: comp } ).toArray(function(err, results) {
+				if (!err) {
+					out["jobs"] = results;
+					console.log(comp + ": " + results[0]);
+					response.send(out);
+				} else {
+					response.send('<!DOCTYPE HTML><html><head><title>DB</title></head><body><h1>ERROR displaying Passenger DB</h1></body></html>');
+				}
+			});
+		});
+	}
+})
+
+
 .listen(PORT)
 
 

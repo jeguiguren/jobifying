@@ -4,15 +4,27 @@
 
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="script.js"></script>
+
 	<title>Job Applications</title>
 </head>
 
 <body>
 
 <h1>Jobs</h1>
-<form method="post" action="localhost:8888">
+
+<form method="post" action="http://localhost:8888/jobs">
 	<p>Company name: <input type="text" name="company" maxlength="15"/></p>
+	<p>Job Title: <input type="text" name="job" maxlength="15"/></p>
+	<p>Link: <input type="text" name="link" maxlength="15"/></p>
+	<p>Status: <input type="text" name="status" maxlength="15"/></p>
 	<p><input type="submit" /></p>
 </form>
+
+
+<p id="demo"></p>
+
+<button onclick="dispJobs()">See All Jobs</button>
+
 </body>
 </html>
