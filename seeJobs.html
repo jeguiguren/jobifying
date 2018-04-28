@@ -4,6 +4,7 @@
 
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="jobListStyle.css">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -14,11 +15,33 @@
 
 <body>
 
-<h2>See Job Applications</h2>
-<p id="job"></p>
-<button onclick="dispJobs()">See All Jobs</button>
+<h1><strong>Job Applications</strong></h1>
 
-<h2><a href="index.html">Home</a></h2>
+
+<div class="topnav">
+  	<a href="index.html" class="active">Home</a>
+  	<a href="newJob.html">Add a Job</a>
+  	<a href="seeJobs.html">Job Applications</a>
+  	<a href="javascript:void(0);" class="icon" onclick="dispJobs()">&#9776;</a>
+</div>
+
+
+<div class="container">
+	<img class="mainImg" src="see.jpg" alt="All Jobs">
+	<div class="text-block"> 
+		<p><button class="but1" onclick="dispJobs(applied)">Applied</button></p>
+		<p><button class="but2" onclick="dispJobs(accepted)">Accepted</button></p>
+		<p><button class="but3" onclick="dispJobs(all)">See All Jobs</button></p>
+
+	</div>
+</div>
+
+
+
+
+
+
+
 
 </body>
 </html>

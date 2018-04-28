@@ -4,8 +4,8 @@
 
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="newJobStyle.css">
-	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="script.js"></script>
 
@@ -14,16 +14,38 @@
 
 <body>
 
-<h1>Add New Job</h1>
-<form method="post" action="http://localhost:8888/jobs">
-	<p>Company name: <input type="text" name="company" maxlength="40"/></p>
-	<p>Job Title: <input type="text" name="job" maxlength="40"/></p>
-	<p>Status: <input type="text" name="status" maxlength="40"/></p>
-	<p>Link: <input type="text" name="link" maxlength="150"/></p>
-	<p><input type="submit" /></p>
-</form>
+<h1><strong>Add a New Job</strong></h1>
+   
+<div class="topnav" id="myTopnav">
+  <a href="index.html" class="active">Home</a>
+  <a href="newJob.html">Add a Job</a>
+  <a href="seeJobs.html">Job Applications</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
 
-<h2><a href="index.html">Home</a></h2>
+
+
+
+<div class="container">
+	<img class="mainImg" src="add.jpg" alt="New Job">
+	<div class="text-block"> 
+
+		<p>Company name: <input type="text" name="company" id="company" maxlength="40"/></p>
+		<p>Job Title: <input type="text" name="job" id="job" maxlength="40"/></p>
+		<p>Status: <input type="text" name="status" id="status" maxlength="40"/></p>
+		<p>Link: <input type="text" name="link" id="link" maxlength="40"/></p>
+		<input type="button" value="Submit" onclick="addJob()" />
+
+	</div>
+</div>
+
+
+
+
 
 </body>
 </html>
+
+
+
+

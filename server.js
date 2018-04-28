@@ -50,7 +50,7 @@ express()
 })
 
 
-.post('/jobs', function (request, response) {
+.post('/newJob', function (request, response) {
 
 	console.log("Posting to /jobs");
 	console.log(request.body);
@@ -64,20 +64,19 @@ express()
 
 	if (newJob.company != undefined && newJob.job != undefined && newJob.link != undefined && newJob.status != undefined) {
 		db.collection(dbcoll, function(error, coll) {
-
 			coll.insert(newJob, function(error, saved) {
 				if (error) {
 					console.log("Error: " + error);
 					response.send(500);
 				}
 				else {
-					response.send("JOB added to DB ! " + newJob);
+					response.send("Job accepted! Thank you");
 				}
 			});
 		});
 	}
 	else {
-		response.send('{"error":"Whoops, something is wrong with your data!"}');
+		response.send("Whoops, something is wrong with your data!");
 	}		
 })
 
@@ -119,6 +118,19 @@ express()
 			});
 		});
 	}
+})
+
+
+.get('/',function(req,res){
+     res.sendFile('index.html');
+})
+
+.get('/seeJobs',function(req,res){
+     res.sendFile('seeJobs.html');
+})
+
+.get('/newJob',function(req,res){
+     res.sendFile('newJob.html');
 })
 
 

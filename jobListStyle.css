@@ -2,16 +2,42 @@
 
 body {
     font-size: 18px;
-    background-color: #DDA0DD;
     font-family: "Grotesque";
 }
 
 
-.floating-box {
-    float: left;
-    width: 200px;
-    height: 200px;
-    margin: 10px;
-    border: 3px solid purple; 
 
+/* Container holding the image and the text */
+.container {
+    position: relative;
+    display: table;
+    width: 100%
+    height: 100%; 
 }
+
+/* Bottom right text */
+.text-block {
+    position: absolute;
+    top: 24%;
+    right: 16%;
+    background-color: transparent;
+    color: navy;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+}
+
+
+
+
+
