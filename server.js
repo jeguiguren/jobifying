@@ -21,36 +21,9 @@ express()
 .use(bodyParser.json())
 .use(bodyParser.urlencoded({ extended: true }))
 
-.get('/', function (request, response) {
-
-	console.log("IN GET");
-	response.set('Content-Type', 'text/html');
-	var indexPage = '';
-
-	// Line 50: equivalent to `db.fooditems` in MongoDB client shell
-	db.collection(dbcoll, function(er, collection) {
-
-		// Line 53: equivalent to `db.fooditems.find()` in MongoDB client shell
-		collection.find().toArray(function(err, results) {
-
-			// All results of db.fooditems.find() will go into...
-			// ...`results`.  `results` will be an array (or list)
-			if (!err) {
-				indexPage += "<!DOCTYPE HTML><html><head><title>What Did You Feed Me?</title></head><body><h1>What Did You Feed Me?</h1>";
-				for (var count = 0; count < results.length; count++) {
-					indexPage += "<p>You fed me " + results[count].company + "!</p>";
-				}
-				indexPage += "</body></html>"
-				response.send(indexPage);
-			} else {
-				response.send('<!DOCTYPE HTML><html><head><title>What Did You Feed Me?</title></head><body><h1>Whoops, something went terribly wrong!</h1></body></html>');
-			}
-		});
-	});		
-})
 
 
-.post('/newJob', function (request, response) {
+.post('/setJob', function (request, response) {
 
 	console.log("Posting to /jobs");
 	console.log(request.body);
@@ -82,55 +55,46 @@ express()
 
 
 
-.post('/seeJobs', function (request, response) {
+.post('/getJob', function (request, response) {
 
-	console.log("Posting to /seeJobs");
+	console.log("Posting to /getJob");
 
-	var comp = request.body.company;
-	var seeAll = (request.body.company == undefined);
+	var categ = request.body.status;
+
+	console.log(categ);
 	var out = {};
 
-	if (seeAll) {
-		console.log("Showing ALL results");
-		
-		db.collection(dbcoll, function(er, collection) {
-			collection.find().toArray(function(err, results) {
-				if (!err) {
-					out["jobs"] = results;
-					console.log("ALL: " + results[0]);
-					response.send(out);
-				} else {
-					response.send('<!DOCTYPE HTML><html><head><title>DB</title></head><body><h1>ERROR displaying Passenger DB</h1></body></html>');
-				}
-			});
-		});
+
+	if (categ != "Accepted" && categ != "Applied") {
+		categ = true;
 	}
-	else {
-		db.collection(dbcoll, function(er, collection) {
-			collection.find( { company: comp } ).toArray(function(err, results) {
-				if (!err) {
-					out["jobs"] = results;
-					console.log(comp + ": " + results[0]);
-					response.send(out);
-				} else {
-					response.send('<!DOCTYPE HTML><html><head><title>DB</title></head><body><h1>ERROR displaying Passenger DB</h1></body></html>');
-				}
-			});
+	db.collection(dbcoll, function(er, collection) {
+		collection.find().toArray(function(err, results) {
+			if (!err) {
+				out["jobs"] = results;
+				console.log(results);
+				response.send(out);
+			} 
+			else {
+				response.send("Error accessing data base");
+
+			}				
 		});
-	}
+	});
+	
 })
 
 
 .get('/',function(req,res){
-     res.sendFile('index.html');
+    res.sendFile('/index.html',  { root: __dirname });
 })
 
 .get('/seeJobs',function(req,res){
-     res.sendFile('seeJobs.html');
+     res.sendFile('/seeJobs.html', { root: __dirname });
 })
 
 .get('/newJob',function(req,res){
-     res.sendFile('newJob.html');
+     res.sendFile('/newJob.html',  { root: __dirname });
 })
 
 

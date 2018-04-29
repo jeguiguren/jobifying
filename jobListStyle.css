@@ -37,7 +37,12 @@ button {
     font-size: 20px;
 }
 
-
+.floating-box {
+	border: solid;
+	display: grid;
+  	grid-template-columns: repeat(6, 1fr);
+  	grid-gap: 10px;
+}
 
 
 
