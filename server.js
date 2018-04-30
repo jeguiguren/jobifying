@@ -13,7 +13,7 @@ const dbcoll = "jobapps";
 
 express()
 
-.use(express.static(__dirname))
+.use(express.static(__dirname + '/public'))
 
 .use(function(req, res, next) {
 	  res.header("Access-Control-Allow-Origin", "*");
