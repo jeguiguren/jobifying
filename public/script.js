@@ -1,11 +1,11 @@
 
-var jobsURL = "http://localhost:3000/getJob";
-var newJobURL = "http://localhost:3000/setJob";
-var clearURL = "http://localhost:3000/clear";
+//var jobsURL = "http://localhost:3000/getJob";
+//var newJobURL = "http://localhost:3000/setJob";
+//var clearURL = "http://localhost:3000/clear";
 
-//var jobsURL = "https://jobifying.herokuapp.com/getJob";
-//var newJobURL = "https://jobifying.herokuapp.com/setJob";
-//var clearURL = "https://jobifying.herokuapp.com/clear";
+var jobsURL = "https://jobifying.herokuapp.com/getJob";
+var newJobURL = "https://jobifying.herokuapp.com/setJob";
+var clearURL = "https://jobifying.herokuapp.com/clear";
 
 
 
