@@ -34,11 +34,11 @@ app.get('/',function(req,res){
 });
 
 app.get('/seeJobs',function(req,res){
-	res.send("IT WORKS");
-	console.log("in /seeJobs");
+	res.send("/seeJobs WORKS");
 });
 
 app.get('/newJob',function(req,res){
+	res.send("/newJob WORKS");
 	console.log("in /newJob");
      res.sendFile('/newJob.html',  { root: __dirname });
 });
