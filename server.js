@@ -84,16 +84,34 @@ express()
 	
 })
 
+.get('/clear',function(req,res){
+	console.log("clearing"); 
+	db.collection(dbcoll, function(er, collection) {
+		collection.remove(function(err, results) {
+			if (!err) {
+				res.send("Data base emptied!");
+			} 
+			else {
+				res.send("Error accessing data base");
+
+			}				
+		});
+	});
+})
+
 
 .get('/',function(req,res){
+	console.log("in /");
     res.sendFile('/index.html',  { root: __dirname });
 })
 
 .get('/seeJobs',function(req,res){
+	console.log("in /seeJobs");
      res.sendFile('/seeJobs.html', { root: __dirname });
 })
 
 .get('/newJob',function(req,res){
+	console.log("in /newJob");
      res.sendFile('/newJob.html',  { root: __dirname });
 })
 

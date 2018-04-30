@@ -2,7 +2,7 @@
 
 body {
     font-size: 18px;
-    font-family: "Grotesque";
+    font-family: Courier New;
 }
 
 
@@ -37,11 +37,22 @@ button {
     font-size: 20px;
 }
 
-.floating-box {
-	border: solid;
+.but2 {
+	background-color: #58D68D; 
+
+}
+
+.jobList {
 	display: grid;
-  	grid-template-columns: repeat(6, 1fr);
+  	grid-template-columns: repeat(3, 1fr);
   	grid-gap: 10px;
+  	font-family: Courier New;
+}
+
+.jobElem {
+	border: 13px solid #58D68D;
+    padding: 25px;
+    margin: 25px;
 }
 
 
