@@ -46,6 +46,7 @@ app.get('/newJob',function(req,res){
 
 app.post('/setJob', function (request, response) {
 
+	res.send("posting to /setJob WORKS");
 	console.log("Posting to /jobs");
 	console.log(request.body);
 
@@ -78,6 +79,8 @@ app.post('/setJob', function (request, response) {
 
 app.post('/getJob', function (request, response) {
 
+	res.send("posting to /getJob WORKS");
+
 	console.log("Posting to /getJob");
 
 	var categ = request.body.status;
@@ -106,6 +109,8 @@ app.post('/getJob', function (request, response) {
 });
 
 app.get('/clear',function(req,res){
+
+	res.send("get to /clear WORKS");
 	console.log("clearing"); 
 	db.collection(dbcoll, function(er, collection) {
 		collection.remove(function(err, results) {
