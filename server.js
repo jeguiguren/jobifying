@@ -1,31 +1,50 @@
-const express = require('express')
-const PORT = process.env.PORT || 8888
-const bodyParser = require('body-parser');
-const validator = require('validator');
-const mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/companies';
-const MongoClient = require('mongodb').MongoClient, format = require('util').format;
+
+////////////////////////////////////////
+
+var express = require('express');
+
+var bodyParser = require('body-parser'); 
+var validator = require('validator'); 
+var app = express();
+var dbcoll = "jobapps";
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
+
+var mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/nodemongoexample';
+var MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
 });
 
-const dbcoll = "jobapps";
+// Serve static content
+app.use(express.static(__dirname + '/public'));
 
-
-express()
-
-.use(express.static(__dirname + '/public'))
-
-.use(function(req, res, next) {
+app.use(function(req, res, next) {
 	  res.header("Access-Control-Allow-Origin", "*");
 	  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	  next();
-})
-.use(bodyParser.json())
-.use(bodyParser.urlencoded({ extended: true }))
+});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
+app.get('/',function(req,res){
+	console.log("in /");
+    res.sendFile('/index.html',  { root: __dirname });
+});
 
-.post('/setJob', function (request, response) {
+app.get('/seeJobs',function(req,res){
+	console.log("in /seeJobs");
+     res.sendFile('/seeJobs.html', { root: __dirname });
+});
+
+app.get('/newJob',function(req,res){
+	console.log("in /newJob");
+     res.sendFile('/newJob.html',  { root: __dirname });
+});
+
+
+app.post('/setJob', function (request, response) {
 
 	console.log("Posting to /jobs");
 	console.log(request.body);
@@ -53,11 +72,11 @@ express()
 	else {
 		response.send("Whoops, something is wrong with your data!");
 	}		
-})
+});
 
 
 
-.post('/getJob', function (request, response) {
+app.post('/getJob', function (request, response) {
 
 	console.log("Posting to /getJob");
 
@@ -84,9 +103,9 @@ express()
 		});
 	});
 	
-})
+});
 
-.get('/clear',function(req,res){
+app.get('/clear',function(req,res){
 	console.log("clearing"); 
 	db.collection(dbcoll, function(er, collection) {
 		collection.remove(function(err, results) {
@@ -99,25 +118,9 @@ express()
 			}				
 		});
 	});
-})
+});
 
 
-.get('/',function(req,res){
-	console.log("in /");
-    res.sendFile('/index.html',  { root: __dirname });
-})
-
-.get('/seeJobs',function(req,res){
-	console.log("in /seeJobs");
-     res.sendFile('/seeJobs.html', { root: __dirname });
-})
-
-.get('/newJob',function(req,res){
-	console.log("in /newJob");
-     res.sendFile('/newJob.html',  { root: __dirname });
-})
-
-
-.listen(PORT)
+app.listen(process.env.PORT || 3000);
 
 

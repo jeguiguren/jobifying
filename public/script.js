@@ -1,7 +1,7 @@
 
-var jobsURL = "http://localhost:8888/getJob";
-var newJobURL = "http://localhost:8888/setJob";
-var clearURL = "http://localhost:8888/clear";
+var jobsURL = "http://localhost:3000/getJob";
+var newJobURL = "http://localhost:3000/setJob";
+var clearURL = "http://localhost:3000/clear";
 
 //var jobsURL = "https://jobifying.herokuapp.com/getJob";
 //var newJobURL = "https://jobifying.herokuapp.com/setJob";
@@ -68,7 +68,7 @@ function printJob(thisJob) {
 	if (company != undefined) {
 
 		var out = "";
-		out += "<p>ID: " + id + "</p>";
+		out += "<p hidden>ID: " + id + "</p>";
 		out += "<p>Company: " + company + "</p>";
 		out += "<p>Position: " + job + "</p>";
 		out += "<p>Status: " + status + "</p>";
