@@ -34,8 +34,8 @@ app.get('/',function(req,res){
 });
 
 app.get('/seeJobs',function(req,res){
+	res.send("IT WORKS");
 	console.log("in /seeJobs");
-     res.sendFile('/seeJobs.html', { root: __dirname });
 });
 
 app.get('/newJob',function(req,res){
